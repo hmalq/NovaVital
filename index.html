@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <title>NovaVital | نبض المهمة</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">✦</span><span><strong>NovaVital</strong><small>نبض المهمة</small></span></a>
+    <span class="mission-tag"><span class="live-dot"></span> متابعة يومية للطاقم</span>
+  </header>
+  <main id="home" class="page-shell">
+    <section class="intro"><p class="eyebrow">العافية تبدأ بملاحظة التغيّر</p><h1>كيف كان يومك؟</h1><p class="intro-copy">سجّل مؤشراتك اليومية، وتابع تغيّرها مع الوقت خلال المهمة.</p></section>
+    <section class="dashboard-grid" aria-label="لوحة متابعة العافية">
+      <form id="checkinForm" class="panel checkin-panel">
+        <div class="panel-heading"><div><p class="eyebrow">تسجيل جديد</p><h2>فحص العافية اليومي</h2></div><span class="heading-icon" aria-hidden="true">＋</span></div>
+        <label class="field-label" for="entryDate">تاريخ التسجيل</label><input id="entryDate" name="date" type="date" required>
+        <label class="field-label" for="sleepHours">ساعات النوم</label><div class="input-with-unit"><input id="sleepHours" name="sleep" type="number" min="0" max="24" step="0.5" placeholder="مثال: 7.5" required><span>ساعة</span></div>
+        <div class="range-heading"><label class="field-label" for="fatigue">مستوى التعب</label><output id="fatigueValue" for="fatigue">3 / 5</output></div><div class="range-labels"><span>مرتاح</span><span>متعب جدًا</span></div><input id="fatigue" name="fatigue" type="range" min="1" max="5" value="3">
+        <div class="range-heading mood-heading"><label class="field-label" for="mood">الحالة المزاجية</label><output id="moodValue" for="mood">3 / 5</output></div><div class="range-labels"><span>منخفضة</span><span>جيدة جدًا</span></div><input id="mood" name="mood" type="range" min="1" max="5" value="3">
+        <button class="button button-primary" type="submit">حفظ تسجيل اليوم <span aria-hidden="true">←</span></button><p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+      </form>
+      <section class="panel trend-panel" aria-labelledby="trendTitle">
+        <div class="panel-heading trend-heading"><div><p class="eyebrow">نظرة على الأيام الأخيرة</p><h2 id="trendTitle">مؤشراتك مع الوقت</h2></div><span class="trend-badge">آخر 7 أيام</span></div>
+        <p class="chart-note">الرسم يعرض تسجيلاتك الشخصية فقط، ويساعدك على ملاحظة التغيّر.</p><div id="trendChart" class="chart-wrap" role="img" aria-label="رسم بياني لمؤشرات العافية"></div>
+        <div class="legend" aria-label="دليل الرسم البياني"><span><i class="legend-dot sleep-dot"></i> النوم (ساعة)</span><span><i class="legend-dot fatigue-dot"></i> التعب</span><span><i class="legend-dot mood-dot"></i> المزاج</span></div>
+        <div id="trendInsight" class="insight-box"><span class="insight-icon" aria-hidden="true">✧</span><p>أضف تسجيلك الأول لتظهر لك المؤشرات هنا.</p></div>
+      </section>
+    </section>
+    <section class="panel history-panel" aria-labelledby="historyTitle">
+      <div class="panel-heading"><div><p class="eyebrow">متابعة مستمرة</p><h2 id="historyTitle">سجلّك اليومي</h2></div><button id="demoButton" class="button button-secondary" type="button">جرّب بيانات تجريبية</button></div>
+      <p class="chart-note">البيانات التجريبية خيالية للعرض فقط، وليست بيانات حقيقية لروّاد فضاء.</p>
+      <div class="table-scroll"><table><thead><tr><th scope="col">التاريخ</th><th scope="col">النوم</th><th scope="col">التعب</th><th scope="col">المزاج</th></tr></thead><tbody id="historyRows"><tr class="empty-row"><td colspan="4">لا توجد تسجيلات بعد.</td></tr></tbody></table></div>
+    </section>
+    <section class="context-grid">
+      <article class="context-card"><span class="context-icon" aria-hidden="true">◉</span><div><p class="eyebrow">لماذا يهم هذا في الفضاء؟</p><h2>راقب النمط، لا قراءة واحدة</h2><p>قد تؤثر العزلة والبيئة المغلقة في النوم والصحة السلوكية. متابعة المؤشرات تساعد الطاقم على ملاحظة التغيّرات واتباع بروتوكول المهمة.</p></div></article>
+      <article class="source-card"><p class="eyebrow">للمعرفة من مصادر ناسا</p><h2>أخطار الرحلات الفضائية</h2><a href="https://www.nasa.gov/hrp/hazards/" target="_blank" rel="noreferrer">برنامج ناسا لأبحاث الإنسان: الأخطار <span aria-hidden="true">↗</span></a><a href="https://www.nasa.gov/hrp/risks/" target="_blank" rel="noreferrer">برنامج ناسا لأبحاث الإنسان: المخاطر <span aria-hidden="true">↗</span></a><p class="source-note">هذه الروابط للتوعية. أضيفوا ملف بيانات ناسا مفتوحًا بعد اختيار مصدر مناسب من موارد التحدي.</p></article>
+    </section>
+    <aside class="disclaimer"><span aria-hidden="true">ⓘ</span><p><strong>نموذج تعليمي أولي.</strong> لا يشخّص حالة طبية ولا يقدّم علاجًا. إذا لاحظت تغيّرًا مقلقًا، اتبع بروتوكول المهمة وتواصل مع المسؤول الطبي.</p></aside>
+  </main>
+  <footer class="footer"><span>NovaVital · مشروع هاكاثون ناسا لتطبيقات الفضاء 2026</span><span>بياناتك محفوظة على هذا المتصفح</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
