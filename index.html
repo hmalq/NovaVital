@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#07111f">
-  <title>NovaVital </title>
+  <title>NovaVital | نبض المهمة</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="topbar">
-    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">✦</span><span><strong>NovaVital</strong><small>NovaVital</small></span></a>
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">✦</span><span><strong>NovaVital</strong><small>نبض المهمة</small></span></a>
     <span class="mission-tag"><span class="live-dot"></span> متابعة يومية للطاقم</span>
   </header>
   <main id="home" class="page-shell">
@@ -42,6 +42,14 @@
       <p class="chart-note">البيانات التجريبية خيالية للعرض فقط، وليست بيانات حقيقية لروّاد فضاء.</p>
       <div class="table-scroll"><table><thead><tr><th scope="col">التاريخ</th><th scope="col">النوم</th><th scope="col">التعب</th><th scope="col">المزاج</th></tr></thead><tbody id="historyRows"><tr class="empty-row"><td colspan="4">لا توجد تسجيلات بعد.</td></tr></tbody></table></div>
     </section>
+    <section id="nasaData" class="panel nasa-panel" aria-labelledby="nasaTitle">
+      <div class="panel-heading"><div><p class="eyebrow">بيانات حقيقية من ناسا</p><h2 id="nasaTitle">رحلة Inspiration4: مؤشرات مناعية في الدم</h2></div><span class="trend-badge">4 رواد</span></div>
+      <div class="marker-tabs" id="markerTabs"></div>
+      <div id="nasaChart" class="nasa-chart" role="img" aria-label="رسم لمؤشر مناعي قبل وبعد الرحلة"></div>
+      <div class="legend" id="nasaLegend"></div>
+      <p id="nasaSummary" class="chart-note"></p>
+      <p class="source-note">المصدر: NASA OSDR، الدراسة OSD-575 (DOI: 10.26030/mc5d-p710). رحلة مدتها 3 أيام، عينات دم قبل الرحلة (L) وبعدها (R). هذه مؤشرات مناعية في الدم وليست نوماً أو مزاجاً. العرض وصفي فقط وليس تقييماً طبياً، والعينة 4 أشخاص فلا يمكن تعميم النتائج.</p>
+    </section>
     <section class="context-grid">
       <article class="context-card"><span class="context-icon" aria-hidden="true">◉</span><div><p class="eyebrow">لماذا يهم هذا في الفضاء؟</p><h2>راقب النمط، لا قراءة واحدة</h2><p>قد تؤثر العزلة والبيئة المغلقة في النوم والصحة السلوكية. متابعة المؤشرات تساعد الطاقم على ملاحظة التغيّرات واتباع بروتوكول المهمة.</p></div></article>
       <article class="source-card"><p class="eyebrow">للمعرفة من مصادر ناسا</p><h2>أخطار الرحلات الفضائية</h2><a href="https://www.nasa.gov/hrp/hazards/" target="_blank" rel="noreferrer">برنامج ناسا لأبحاث الإنسان: الأخطار <span aria-hidden="true">↗</span></a><a href="https://www.nasa.gov/hrp/risks/" target="_blank" rel="noreferrer">برنامج ناسا لأبحاث الإنسان: المخاطر <span aria-hidden="true">↗</span></a><p class="source-note">هذه الروابط للتوعية. أضيفوا ملف بيانات ناسا مفتوحًا بعد اختيار مصدر مناسب من موارد التحدي.</p></article>
@@ -49,6 +57,7 @@
     <aside class="disclaimer"><span aria-hidden="true">ⓘ</span><p><strong>نموذج تعليمي أولي.</strong> لا يشخّص حالة طبية ولا يقدّم علاجًا. إذا لاحظت تغيّرًا مقلقًا، اتبع بروتوكول المهمة وتواصل مع المسؤول الطبي.</p></aside>
   </main>
   <footer class="footer"><span>NovaVital · مشروع هاكاثون ناسا لتطبيقات الفضاء 2026</span><span>بياناتك محفوظة على هذا المتصفح</span></footer>
+  <script src="data/inspiration4_markers.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

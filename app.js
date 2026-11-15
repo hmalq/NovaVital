@@ -159,3 +159,37 @@ demoButton.addEventListener("click", () => {
 });
 updateRangeLabels();
 render();
+
+// ===== قسم بيانات ناسا (Inspiration4) =====
+(function () {
+  const D = window.I4_DATA, tabs = document.querySelector("#markerTabs");
+  const box = document.querySelector("#nasaChart"), legend = document.querySelector("#nasaLegend"), sum = document.querySelector("#nasaSummary");
+  if (!tabs) return;
+  if (!D) { box.innerHTML = '<p style="color:#9aadc3">تعذّر تحميل بيانات ناسا.</p>'; return; }
+  const colors = { C001: "#61dfd0", C002: "#b9a7ff", C003: "#ffc978", C004: "#ff9d9d" };
+  const avg = (a) => { const v = a.filter((x) => x !== null); return v.reduce((s, x) => s + x, 0) / v.length; };
+  function draw(key) {
+    const m = D.markers[key], tp = D.timepoints, W = 640, H = 300, L = 42, R = 14, T = 16, B = 36;
+    const all = Object.values(m.crew).flat().filter((x) => x !== null);
+    const lo = Math.min(...all) - 0.3, hi = Math.max(...all) + 0.3;
+    const x = (i) => L + (i * (W - L - R)) / (tp.length - 1), y = (v) => T + ((hi - v) * (H - T - B)) / (hi - lo);
+    let s = '<svg viewBox="0 0 ' + W + " " + H + '">';
+    for (let g = 0; g <= 4; g++) { const v = lo + ((hi - lo) * g) / 4; s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="#2a3d52" stroke-dasharray="4 5"/><text x="' + (L - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end">' + v.toFixed(1) + "</text>"; }
+    const dx = (x(2) + x(3)) / 2;
+    s += '<line x1="' + dx + '" x2="' + dx + '" y1="' + T + '" y2="' + (H - B) + '" stroke="#ffc978" stroke-dasharray="6 4"/><text x="' + (dx - 6) + '" y="' + (T + 10) + '" text-anchor="end">Pre-flight</text><text x="' + (dx + 6) + '" y="' + (T + 10) + '">Post-flight</text>';
+    tp.forEach((t, i) => { s += '<text x="' + x(i) + '" y="' + (H - 12) + '" text-anchor="middle">' + t + "</text>"; });
+    Object.entries(m.crew).forEach(([c, vals]) => {
+      const pts = vals.map((v, i) => (v === null ? null : [x(i), y(v)])).filter(Boolean);
+      s += '<polyline fill="none" stroke="' + colors[c] + '" stroke-width="2.5" stroke-linejoin="round" points="' + pts.map((p) => p.join(",")).join(" ") + '"/>';
+      pts.forEach((p) => { s += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.5" fill="' + colors[c] + '"/>'; });
+    });
+    box.innerHTML = s + "</svg>";
+    legend.innerHTML = Object.keys(colors).map((c) => '<span><i class="legend-dot" style="background:' + colors[c] + '"></i> رائد ' + c.slice(-1) + "</span>").join("") + "<span>الوحدة: " + D.unit + "</span>";
+    const pre = avg(Object.values(m.crew).flatMap((a) => a.slice(0, 3))), post = avg(Object.values(m.crew).flatMap((a) => a.slice(3, 4)));
+    sum.textContent = m.label + ": متوسط الطاقم قبل الرحلة " + pre.toFixed(2) + "، وبعد يوم من العودة (R+1) " + post.toFixed(2) + ". مقارنة وصفية فقط.";
+    tabs.querySelectorAll("button").forEach((b) => b.classList.toggle("active", b.dataset.k === key));
+  }
+  tabs.innerHTML = Object.entries(D.markers).map(([k, v]) => '<button type="button" data-k="' + k + '">' + v.label + "</button>").join("");
+  tabs.addEventListener("click", (e) => { if (e.target.dataset.k) draw(e.target.dataset.k); });
+  draw("il6");
+})();
