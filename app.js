@@ -12,6 +12,11 @@ const rows = document.querySelector("#historyRows");
 const chart = document.querySelector("#trendChart");
 const insight = document.querySelector("#trendInsight");
 const demoButton = document.querySelector("#demoButton");
+const dailySummary = document.querySelector("#dailySummary");
+const summaryStatus = document.querySelector("#summaryStatus");
+const summaryReason = document.querySelector("#summaryReason");
+const summaryAdvice = document.querySelector("#summaryAdvice");
+const summaryDataNote = document.querySelector("#summaryDataNote");
 
 function localDateString(date = new Date()) {
   const local = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
@@ -80,7 +85,50 @@ function renderChart() {
   chart.innerHTML = content + '</div>';
   insight.innerHTML = '<span class="insight-icon" aria-hidden="true">✧</span><p>هذه متابعة للقراءات المسجّلة فقط؛ لاحظ التغيّر واتبع بروتوكول المهمة عند الحاجة.</p>';
 }
-function render() { renderHistory(); renderChart(); }
+function renderDailySummary(focusEntry) {
+  const newest = [...entries].sort((a, b) => b.date.localeCompare(a.date));
+  const current = focusEntry || newest[0];
+  if (!current) {
+    dailySummary.hidden = true;
+    return;
+  }
+
+  dailySummary.hidden = false;
+  const previous = entries
+    .filter((item) => item.date < current.date)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+  const simulated = Boolean(current.demo || (previous && previous.demo));
+  summaryDataNote.hidden = !simulated;
+
+  if (!previous) {
+    summaryStatus.textContent = "بانتظار قراءات سابقة";
+    summaryStatus.className = "summary-status summary-status-pending";
+    summaryReason.textContent = "هذا أول تسجيل متاح للمقارنة، لذلك لا يمكن وصف التغيّر بعد. ستظهر المقارنة عند إضافة تسجيل سابق.";
+    summaryAdvice.textContent = "واصل تسجيل النوم والمزاج والتعب بانتظام، واطلب الدعم عبر بروتوكول المهمة إذا كان لديك قلق.";
+    return;
+  }
+
+  const changes = [];
+  const sleepDelta = Number(current.sleep) - Number(previous.sleep);
+  const fatigueDelta = Number(current.fatigue) - Number(previous.fatigue);
+  const moodDelta = Number(current.mood) - Number(previous.mood);
+  if (sleepDelta < 0) changes.push("انخفض النوم بمقدار " + Math.abs(sleepDelta).toLocaleString("ar-SA") + " ساعة");
+  if (fatigueDelta > 0) changes.push("ارتفع التعب بمقدار " + fatigueDelta.toLocaleString("ar-SA") + " من ٥");
+  if (moodDelta < 0) changes.push("انخفض المزاج بمقدار " + Math.abs(moodDelta).toLocaleString("ar-SA") + " من ٥");
+
+  if (changes.length) {
+    summaryStatus.textContent = "يحتاج متابعة";
+    summaryStatus.className = "summary-status summary-status-followup";
+    summaryReason.textContent = changes.join("، و") + " مقارنة بآخر تسجيل سابق (" + formatDate(previous.date) + "). هذه ملاحظة للتغيّر وليست تقييمًا طبيًا.";
+    summaryAdvice.textContent = "واصل التسجيل، واهتم بروتين النوم والراحة. إذا استمر التغيّر أو أقلقك، تواصل مع المسؤول الطبي واتبع بروتوكول المهمة.";
+  } else {
+    summaryStatus.textContent = "مستقر مقارنة بالتسجيل السابق";
+    summaryStatus.className = "summary-status summary-status-stable";
+    summaryReason.textContent = "لم يظهر تراجع في النوم أو المزاج، ولا ارتفاع في التعب مقارنة بآخر تسجيل سابق (" + formatDate(previous.date) + "). هذه مقارنة وصفية فقط وليست تقييمًا طبيًا.";
+    summaryAdvice.textContent = "استمر في تسجيل المؤشرات وملاحظة نمطها مع الوقت، واتبع بروتوكول المهمة إذا ظهر ما يقلقك.";
+  }
+}
+function render(focusEntry) { renderHistory(); renderChart(); renderDailySummary(focusEntry); }
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -93,7 +141,7 @@ form.addEventListener("submit", (event) => {
   if (index >= 0) entries[index] = entry; else entries.push(entry);
   if (!saveEntries()) return;
   message.textContent = index >= 0 ? "تم تحديث تسجيل هذا اليوم." : "تم حفظ تسجيل اليوم.";
-  render();
+  render(entry);
 });
 
 demoButton.addEventListener("click", () => {

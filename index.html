@@ -30,6 +30,13 @@
         <div id="trendInsight" class="insight-box"><span class="insight-icon" aria-hidden="true">✧</span><p>أضف تسجيلك الأول لتظهر لك المؤشرات هنا.</p></div>
       </section>
     </section>
+    <section id="dailySummary" class="panel daily-summary" aria-labelledby="dailySummaryTitle" aria-live="polite" hidden>
+      <div class="panel-heading summary-heading"><div><p class="eyebrow">مقارنة وصفية بقراءاتك السابقة</p><h2 id="dailySummaryTitle">ملخص اليوم</h2></div><span id="summaryStatus" class="summary-status summary-status-pending">بانتظار قراءات سابقة</span></div>
+      <p id="summaryReason" class="summary-reason">سيظهر التغيّر بعد توفر تسجيل سابق.</p>
+      <div class="summary-advice"><strong>نصيحة عامة</strong><p id="summaryAdvice">واصل تسجيل مؤشراتك بانتظام.</p></div>
+      <p id="summaryDataNote" class="summary-data-note" hidden>تنبيه: تعتمد هذه المقارنة على بيانات مصطنعة للعرض فقط، وليست قراءات حقيقية.</p>
+      <div class="summary-sources"><span>للسياق التوعوي من ناسا:</span><a href="https://www.nasa.gov/hrp/hazards/" target="_blank" rel="noreferrer">أخطار الرحلات الفضائية</a><a href="https://www.nasa.gov/hrp/risks/" target="_blank" rel="noreferrer">المخاطر الصحية في الرحلات الفضائية</a><small>هذه المصادر للتوعية فقط؛ لا تُستخدم هنا كحدود طبية أو كبيانات لقراءات المستخدم.</small></div>
+    </section>
     <section class="panel history-panel" aria-labelledby="historyTitle">
       <div class="panel-heading"><div><p class="eyebrow">متابعة مستمرة</p><h2 id="historyTitle">سجلّك اليومي</h2></div><button id="demoButton" class="button button-secondary" type="button">جرّب بيانات تجريبية</button></div>
       <p class="chart-note">البيانات التجريبية خيالية للعرض فقط، وليست بيانات حقيقية لروّاد فضاء.</p>
